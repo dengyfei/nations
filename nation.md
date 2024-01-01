@@ -3,6 +3,9 @@ vueUse 使用
 事件总线型的 hooks 和 vuex/pinia 的区别
 了解乾坤用法，
 npm 包开发流程
+mockjs
+fullcanlerda
+tippy
 
 # 事件总线
 
