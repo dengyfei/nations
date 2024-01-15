@@ -3,9 +3,7 @@ vueUse 使用
 事件总线型的 hooks 和 vuex/pinia 的区别
 了解乾坤用法，
 npm 包开发流程
-mockjs
-fullcanlerda
-tippy
+流式
 
 # 事件总线
 
@@ -97,3 +95,74 @@ console.log(stateRefs.name.value)
 
 共性： 两者都是将 reactive 属性转换成 ref 对象，并和原来属性保持引用关系。两者都不会创造响应式，只延续响应式。
 区别：toRef 是指定某一节点提取出来，toRefs 是一次性将所有节点提取出来。但 toRefs 只能提取一级节点。
+
+# element plus 自定义命名空间
+
+1、设置scss和css变量
+
+```scss
+// styles/element/index.scss
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: 'ep'
+);
+```
+这样配置后，从element plus中导入的scss文件中的`$namespace`变量都是`ep`了。
+
+2、配置vite.config.js，主要实现以下效果：
+
+* 按需导入element plus组件
+* 从element plus中导入scss文件
+* 将刚刚配置的scss文件作为全局配置
+
+
+
+```js
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import path from 'path'
+
+export default defineConfig(({ command, mode }) => {
+  return {
+    plugins: [
+      vue(),
+      // 按需导入element plus组件
+      Components({
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass',  //导入scss文件
+          }),
+        ],
+      }),
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, 'src')
+      }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/assets/element.scss" as *;` //设置全局样式文件配置
+        }
+      }
+    }
+  }
+})
+
+```
+
+3、设置ElConfigProvider
+
+使用 ElConfigProvider 包装您的根组件。
+```vue
+<!-- App.vue -->
+<template>
+  <el-config-provider namespace="ep">
+    <el-button type="primary">Primary</el-button>
+  </el-config-provider>
+</template>
+```
+
+如此一来，生成的元素的类名就不再是`el-*`，而是`ep-*`，比如上面的按钮的类，最终是`ep-button`，这样就可以通过自定义命名空间的方式来避免样式冲突
