@@ -98,7 +98,7 @@ console.log(stateRefs.name.value)
 
 # element plus 自定义命名空间
 
-1、设置scss和css变量
+1、设置 scss 和 css 变量
 
 ```scss
 // styles/element/index.scss
@@ -106,15 +106,14 @@ console.log(stateRefs.name.value)
   $namespace: 'ep'
 );
 ```
-这样配置后，从element plus中导入的scss文件中的`$namespace`变量都是`ep`了。
 
-2、配置vite.config.js，主要实现以下效果：
+这样配置后，从 element plus 中导入的 scss 文件中的`$namespace`变量都是`ep`了。
 
-* 按需导入element plus组件
-* 从element plus中导入scss文件
-* 将刚刚配置的scss文件作为全局配置
+2、配置 vite.config.js，主要实现以下效果：
 
-
+- 按需导入 element plus 组件
+- 从 element plus 中导入 scss 文件
+- 将刚刚配置的 scss 文件作为全局配置
 
 ```js
 import { defineConfig } from 'vite'
@@ -131,31 +130,31 @@ export default defineConfig(({ command, mode }) => {
       Components({
         resolvers: [
           ElementPlusResolver({
-            importStyle: 'sass',  //导入scss文件
+            importStyle: 'sass', //导入scss文件
           }),
         ],
       }),
     ],
     resolve: {
       alias: {
-        '@': path.resolve(__dirname, 'src')
-      }
+        '@': path.resolve(__dirname, 'src'),
+      },
     },
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/element.scss" as *;` //设置全局样式文件配置
-        }
-      }
-    }
+          additionalData: `@use "@/assets/element.scss" as *;`, //设置全局样式文件配置
+        },
+      },
+    },
   }
 })
-
 ```
 
-3、设置ElConfigProvider
+3、设置 ElConfigProvider
 
 使用 ElConfigProvider 包装您的根组件。
+
 ```vue
 <!-- App.vue -->
 <template>
@@ -165,4 +164,14 @@ export default defineConfig(({ command, mode }) => {
 </template>
 ```
 
-如此一来，生成的元素的类名就不再是`el-*`，而是`ep-*`，比如上面的按钮的类，最终是`ep-button`，这样就可以通过自定义命名空间的方式来避免样式冲突
+如此一来，生成的元素的类名就不再是`el-*`，而是`ep-*`，比如上面的按钮的类，最终是`ep-button`，这样就可以通过自定义命名空间的方式来避免样式冲突。
+此时，会导致 MessageBox 及 Message 的默认样式无法生效。
+此时我们需要在之前的 sass 文件中单独引入两个组件的样式文件即可
+
+```scss
+@forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+  $namespace: 'eai'
+);
+@use 'element-plus/theme-chalk/el-message.css';
+@use 'element-plus/theme-chalk/src/message-box.scss';
+```
