@@ -175,6 +175,38 @@ export default defineConfig(({ command, mode }) => {
 @use 'element-plus/theme-chalk/el-message.css';
 @use 'element-plus/theme-chalk/src/message-box.scss';
 ```
+除了手动引入样式，我们还可以配置自动导入样式：
+
+```js
+pnpm add vite-plugin-style-import -D
+```
+
+```js
+//vite.config.ts
+
+import {
+  createStyleImportPlugin,
+  ElementPlusResolve,
+} from 'vite-plugin-style-import'
+
+export default defineConfig({
+  plugins: [
+    createStyleImportPlugin({
+      resolves: [ElementPlusResolve()],
+      libs: [
+        // 如果没有你需要的resolve，可以在lib内直接写，也可以给我们提供PR
+        {
+          libraryName: 'element-plus',
+          esModule: true,
+          resolveStyle: (name: string) => {
+            return `element-plus/theme-chalk/${name}.css`
+          },
+        },
+      ],
+    }),
+  ],
+})
+```
 
 # composition API 的优势
 
@@ -183,3 +215,4 @@ export default defineConfig(({ command, mode }) => {
 * 提供更好的上下文支持，在options API中经常会由于this上下文指向不明确而导致一些难以预料和排查的问题，比如mixin。
 * 更好的Typescript类型支持
 * 可以按功能和逻辑组织代码，提高可维护性。比如，我们可以登录功能的所有逻辑放在一起，也可以抽离单独的hooks文件。
+=======
