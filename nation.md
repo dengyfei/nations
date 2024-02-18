@@ -175,3 +175,11 @@ export default defineConfig(({ command, mode }) => {
 @use 'element-plus/theme-chalk/el-message.css';
 @use 'element-plus/theme-chalk/src/message-box.scss';
 ```
+
+# composition API 的优势
+
+* 极易复用，由于composition API的方法都是以JS原生函数的形式呈现，所以极大的提高了可复用性，甚至可以抽离成hooks函数被多个组件共同使用
+* 生命周期函数可以多次使用，灵活组合
+* 提供更好的上下文支持，在options API中经常会由于this上下文指向不明确而导致一些难以预料和排查的问题，比如mixin。
+* 更好的Typescript类型支持
+* 可以按功能和逻辑组织代码，提高可维护性。比如，我们可以登录功能的所有逻辑放在一起，也可以抽离单独的hooks文件。
