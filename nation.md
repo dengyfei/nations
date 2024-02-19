@@ -215,4 +215,3 @@ export default defineConfig({
 * 提供更好的上下文支持，在options API中经常会由于this上下文指向不明确而导致一些难以预料和排查的问题，比如mixin。
 * 更好的Typescript类型支持
 * 可以按功能和逻辑组织代码，提高可维护性。比如，我们可以登录功能的所有逻辑放在一起，也可以抽离单独的hooks文件。
-=======
