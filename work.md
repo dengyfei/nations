@@ -60,3 +60,17 @@ watch: {
 },
 ```
 所以，我们每次在菜单栏中新增一个tab，都需要翔哥那边操作，并告诉他highlightId值
+
+# 微组件使用
+如果微组件项目组织结构如下：
+```js
+├─ai-assistant-widget
+    ├─libCos
+    │  ├─eai-assistant-widget
+    │  └─eai-assistant-widget1
+```
+```js
+MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project_name' })?.get('eai-assistant-widget');
+```
+
+其中`section`表示目录名，`project`代表唯一key，一般为项目名，get后的参数为libCos打包后的名字
