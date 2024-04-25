@@ -114,3 +114,56 @@ unocss:
 经过多次的验证发现，我们在网络较好的情况下，不会出现这种现象，加上sse的重发机制。我们就猜想是浏览器第一次向后端发起sse请求，然后服务器会返回一个readyState状态码为1给客户端，告诉客户端已链接成功，但是由于网络的原因，导致客户端未能及时收到状态的改变，所以浏览器又发了一条请求，这个时候就会导致服务端检测到msgID已重复，然后返回401。
 
 后面我的解决方案是后端做个兜底方案，就是请求成功后，将结果与参数同时写入到radis数据库，如果在短时间内sse有重发的情况，就直接返回radis数据库中的答案即可。
+
+# vue3中挂载vue2组件
+
+## 背景
+新系统是vue3的，里面有一个用户导入的模块，复用B端管理台原有的组件，原有组件时vue2开发的，并且使用webpack以umd格式导出。
+
+## 实现
+在vue3系统中，我们用 npm alias 来安装 vue2，
+```shell
+pnpm add vue2@npm:vue@^2.7
+```
+在代码中这样实现
+
+```js
+import Vue from 'vue2'
+
+function init() {
+  // 在引入组件之前，先要在window上挂载Vue变量
+  window.Vue = Vue
+  createScript()
+}
+
+function createScript() {
+  const el = document.createElement('script')
+  el.src = 'xxxxx'   //组件cdn路径
+  el.onload = mount  //脚本请求回来后在挂载
+}
+
+const Construct = Vue.extend(ComponentName)  //组件名有umd导出
+const instance = new Construct({
+  // 传入props
+  propsData: {
+    aaa: 111
+  }
+})
+//传入事件
+evens.forEach((eventName) => {
+  instance.$on(eventName, events[eventName])
+})
+
+// 挂载
+instance.$mount('#id')
+```
+
+## 难题
+原先的组件内部有通过`$router.push`的方式跳转，但是在vue3中使用的`vue-router4.x`版本已经抛弃了这种方式，所以会导致阻塞并且抛出异常。后面我们是通过给挂载在window上的Vue这个变量自定义`$router.push`方法，然后使用`vue-router4.x`版本相应的方法去跳转，甚至可以使用location的方式。
+```js
+window.Vue.$router = {
+  push() {
+    //逻辑
+  }
+}
+```
