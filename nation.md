@@ -4,7 +4,11 @@ vueUse 使用
 了解乾坤用法，
 npm 包开发流程
 vue3中挂载vue2组件
-打包umd，cjm，es的具体配置以及引入
+.d.ts文件
+
+vueuse中的useEventSource
+AbortController
+EventSource
 
 
 # 事件总线
