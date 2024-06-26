@@ -78,3 +78,10 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 
 # 查看店铺是否在灰度中
 产研平台 ==》 运维平台 ==》 服务搜索 ==》店铺灰度查询
+
+
+# cdn发布
+1、前端输出成果物结构须符合公共模板要求
+2、成果物上传到cos桶
+3、找张韶哥申请一个域名，并把域名知道公共模板服务
+4、找sam哥配置。 
