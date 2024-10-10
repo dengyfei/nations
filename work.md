@@ -85,3 +85,8 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 2、成果物上传到cos桶
 3、找张韶哥申请一个域名，并把域名知道公共模板服务
 4、找sam哥配置。 
+
+
+# sam哥路径配置
+1、找sam配置路径，路径需要符合规范
+2、将router下的base配置成给sam哥的路径
