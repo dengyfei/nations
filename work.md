@@ -90,3 +90,7 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # sam哥路径配置
 1、找sam配置路径，路径需要符合规范
 2、将router下的base配置成给sam哥的路径
+
+# 组件发布
+1、班车系统 --> 服务管理 --> 服务列表 --> 添加系统。添加完系统后，每次提交都会自动创建githook，然后触发coding构建
+2、在项目中新建build.yaml文件
