@@ -73,7 +73,7 @@ watch: {
 MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project_name' })?.get('eai-assistant-widget');
 ```
 
-其中`section`表示目录名，`project`代表唯一key，一般为项目名，而且和班车中绑定的配置项系统名要相同，get后的参数为libCos打包后的名字
+其中`section`表示目录名，是libCos的父级目录名称，`project`代表唯一key，一般为项目名，而且和班车中绑定的配置项系统名要相同，get后的参数为libCos打包后的名字，是libCos的子目录名称
 班车中配置的系统名对应为project，增加的配置项(微组件名)对应为section。
 
 # 查看店铺是否在灰度中
