@@ -73,7 +73,7 @@ watch: {
 MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project_name' })?.get('eai-assistant-widget');
 ```
 
-其中`section`表示目录名，`project`代表唯一key，一般为项目名，而且和班车中绑定的配置项系统名要相同，get后的参数为libCos打包后的名字
+其中`section`表示目录名，是libCos的父级目录名称，`project`代表唯一key，一般为项目名，而且和班车中绑定的配置项系统名要相同，get后的参数为libCos打包后的名字，是libCos的子目录名称
 班车中配置的系统名对应为project，增加的配置项(微组件名)对应为section。
 
 # 查看店铺是否在灰度中
@@ -90,3 +90,7 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # sam哥路径配置
 1、找sam配置路径，路径需要符合规范
 2、将router下的base配置成给sam哥的路径
+
+# 组件发布
+1、班车系统 --> 服务管理 --> 服务列表 --> 添加系统。添加完系统后，每次提交都会自动创建githook，然后触发coding构建
+2、在项目中新建build.yaml文件
