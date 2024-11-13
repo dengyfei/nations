@@ -95,3 +95,7 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 1、班车系统 --> 服务管理 --> 服务列表 --> 添加系统。添加完系统后，每次提交都会自动创建githook，然后触发coding构建
 2、在项目中新建build.yaml文件
 
+# 广告投放
+1、clickId由广告平台生成，用户每一次进入广告落地页的clickId都不一样，因此可视为唯一值。
+2、clueId--线索id，用户提交信息采集后，由scrm生成。
+3、userId： 用户提交信息采集后，由信息采集组件生成
