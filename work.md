@@ -83,8 +83,8 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # cdn发布
 1、前端输出成果物结构须符合公共模板要求
 2、成果物上传到cos桶
-3、找张韶哥申请一个域名，并把域名知道公共模板服务
-4、找sam哥配置。 
+3、找运维把域名指到公共模板服务
+4、找sam哥注册对应系统，注册后返回的公共模板就能返回对应系统的静态资源了。 
 
 
 # sam哥路径配置
@@ -94,3 +94,4 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # 组件发布
 1、班车系统 --> 服务管理 --> 服务列表 --> 添加系统。添加完系统后，每次提交都会自动创建githook，然后触发coding构建
 2、在项目中新建build.yaml文件
+
