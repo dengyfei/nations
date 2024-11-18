@@ -98,4 +98,5 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # 广告投放
 1、clickId由广告平台生成，用户每一次进入广告落地页的clickId都不一样，因此可视为唯一值。
 2、clueId--线索id，用户提交信息采集后，由scrm生成。
-3、userId： 用户提交信息采集后，由信息采集组件生成
+3、userId： 用户提交信息采集后，由信息采集组件生成。
+4、linkUserId: 用于锁课锁码，同一用户不同终端，或同一用户不同应用均不一样；匿名用户下单，使用link_user_id+linkId判断权益
