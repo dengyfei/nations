@@ -97,6 +97,13 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 
 # 广告投放
 1、clickId由广告平台生成，用户每一次进入广告落地页的clickId都不一样，因此可视为唯一值。
-2、clueId--线索id，用户提交信息采集后，由scrm生成。
+2、clueId--线索id， 由srcm生成，有三个时间生成：
+    2.1、有用户的下单场景，即非微信环境下留资购课加微场景，当填写信息采集后，由scrm生成。
+    2.2、加微后生成，此时可以得知用户，因此scrm可以生成
+    2.3、登录小程序后生成，此时可以得知用户，因此scrm可以生成
 3、userId： 用户提交信息采集后，由信息采集组件生成。
 4、linkUserId: 用于锁课锁码，同一用户不同终端，或同一用户不同应用均不一样；匿名用户下单，使用link_user_id+linkId判断权益
+
+## 问题
+1、小程序无法展码
+调用 update_click_record 的时候接口没有返回clue_id，还继续往下执行。
