@@ -83,7 +83,7 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 # cdn发布
 1、前端输出成果物结构须符合公共模板要求
 2、成果物上传到cos桶
-3、找运维把域名指到公共模板服务
+3、找运维把域名指到公共模板服务（独立域名才需要，统一域名无法找运维）
 4、找sam哥注册对应系统，注册后返回的公共模板就能返回对应系统的静态资源了。 
 
 
@@ -107,3 +107,9 @@ MircoComponent = await Mimir({ section: 'ai-assistant-widget', project: 'project
 ## 问题
 1、小程序无法展码
 调用 update_click_record 的时候接口没有返回clue_id，还继续往下执行。
+
+2、支付后未展码，跳转到其他地方
+
+自定义域名由于跨域问题，无法直接拉起支付，所以在jinwei系统中，做了一个判断，如果是独立域名时，前端直接跳转到域名为h5.xiaoe.com的新路径，这个路径是一个空白页，在这个空白页拉起支付，已解决跨域导致的无法拉起支付问题。
+在空白页支付完成后，会进行跳转，跳转到后端返回的一个redirect_url页面，如果后端没有返回redirect_url，则默认跳转到上一个reference页面，即h5.xiaoe.com(店铺首页)。
+因此，如果支付完成后跳转到首页的原因就是后端没有返回一个redirect_url的字段
