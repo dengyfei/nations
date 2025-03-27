@@ -287,3 +287,13 @@ pc端和移动端的布局是不一样的，所以需要使用媒体查询，根
 2.1、先从localstorage中查找之前设置的语言，如何没有设置，直接使用`navigator.lange`获取浏览器使用的语言作为i18n初始化语言，使用英语作为兜底语言。
 
 2.2、初始化时只传入英语作为初始语言，然后根据这个语言去请求对应的语言包，当用户切换语言时，使用import函数动态加载语言包，然后使用`vue-i18n`的`mergeLocaleMessage`方法将语言包合并到`vue-i18n`的`messages`中，这样就可以根据用户选择的语言，动态的切换语言包。同时，也减少了首次渲染时间。
+
+# 直播间优惠券
+
+我们需要提供三个组件给到业务侧，这三个组件又可以拆分出若干个组件，而且有些公共组件，所以决定放到出海业务的monorape架构中实现组件库开发。并且提供按需引入和多语言的能力。对外的组件允许业务侧使用vue3.5提供的`v-model:show`实现控制组件的显隐，组件内部通过`defineModel('show', {type: Boolean, default: false})`实现；组件内部通过`widthDefaults`结合`defineProps`实现属性的接收和ts的类型检查；通过`v-bind="$attrs"`实现组件的属性透传；通过`defineEmits`实现组件的事件监听和ts的类型检查；通过`defineSlots`实现组件的插槽定义和ts的类型检查；通过`defineExpose`实现组件的暴露和ts的类型检查；通过`defineOptions`实现组件的选项定义，比如`name`。
+
+在`main.js`中通过`import.meta.global('文件路径', {eager: true})`实现对locals下json文件的统一导入，并合并messages中，完成多语言的导入。
+
+监听屏幕尺寸，判断`window.innerWidth`大小判断是否时pc端，pc端使用dialog弹窗，移动端使用popup弹窗。
+
+通过向组件传递column参数，通过gird布局，结合`v-bind`在css中的使用实现pc端展示两列，移动端展示一列的响应式布局。具体实现：`grid-template-columns: repeat(v-bind(column), 1fr);`
